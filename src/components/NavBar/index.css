@@ -1,0 +1,18 @@
+.nav-card {
+  background-color: #9796f0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: white;
+  font-weight: bold;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.logo-order {
+  display: flex;
+  flex-direction: row;
+}
+.ppp {
+  margin-right: 20px;
+}
