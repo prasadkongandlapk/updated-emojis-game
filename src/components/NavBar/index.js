@@ -1,7 +1,7 @@
 import './index.css'
 
 const NavBar = props => {
-  const {score, topScore} = props
+  const {score, topScore, hideScore} = props
 
   return (
     <div className="nav-card">
@@ -11,12 +11,16 @@ const NavBar = props => {
           src="https://assets.ccbp.in/frontend/react-js/game-logo-img.png "
           alt="emoji logo"
         />
-        <p>Emoji Game</p>
+        <h1>Emoji Game</h1>
       </div>
-      <div className="logo-order">
-        <p className="ppp">Score: {score}</p>
-        <p>TopScore: {topScore}</p>
-      </div>
+      {hideScore === false ? (
+        <div className="logo-order">
+          <p className="ppp">Score: {score}</p>
+          <p>Top Score: {topScore}</p>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   )
 }

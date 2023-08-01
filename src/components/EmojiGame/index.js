@@ -2,64 +2,59 @@ import './index.css'
 import {Component} from 'react'
 import NavBar from '../NavBar'
 import EmojiCard from '../EmojiCard'
-
-const clickedList = []
+import WinOrLoseCard from '../WinOrLoseCard'
 
 class EmojiGame extends Component {
   state = {
     isEmojiPresent: false,
-    clickedEmojisList: clickedList,
+    clickedEmojisList: [],
     score: 0,
     topScore: 0,
     showResult: true,
+    hideScore: false,
+  }
+
+  onClickPlayAgain = score => {
+    const {topScore} = this.state
+    if (score > topScore) {
+      this.setState(prevState => ({
+        showResult: !prevState.showResult,
+        topScore: score - 1,
+        hideScore: !prevState.hideScore,
+        score: 0,
+      }))
+    }
   }
 
   gameResult = () => {
     const {
+      score,
+      topScore,
       isEmojiPresent,
       showResult,
       clickedEmojisList,
       emojisList,
-      score,
     } = this.state
-    const image =
-      isEmojiPresent === true
-        ? 'https://assets.ccbp.in/frontend/react-js/lose-game-img.png'
-        : 'https://assets.ccbp.in/frontend/react-js/won-game-img.png'
-
-    this.onClickPlayAgain = () => {
-      this.setState(prevState => ({
-        showResult: !prevState.showResult,
-        topScore: score,
-        score: 0,
-      }))
-    }
-    const title = clickedEmojisList.length === 12 ? 'You Won' : 'You Lose'
     return (
-      <div className="kdsjkfl">
-        <div className="adkjl">
-          <h1>{title} </h1>
-          <h1 className="aldkfkla">{clickedEmojisList.length}/12</h1>
-          <button
-            type="button"
-            onClick={this.onClickPlayAgain}
-            className="jdfljk"
-          >
-            Play again
-          </button>
-        </div>
-        <div>
-          <img className="img-result" src={image} alt="game results" />
-        </div>
-      </div>
+      <WinOrLoseCard
+        score={score}
+        topScore={topScore}
+        onClickPlayAgain={this.onClickPlayAgain}
+        isEmojiPresent={isEmojiPresent}
+        showResult={showResult}
+        clickedEmojisList={clickedEmojisList}
+        emojisList={emojisList}
+      />
     )
   }
 
   emojis = () => {
     const {emojisList} = this.props
+    const shuffled = emojisList.sort(() => Math.random() - 0.5)
+
     return (
       <ul className="ul">
-        {emojisList.map(eachEmoji => (
+        {shuffled.map(eachEmoji => (
           <EmojiCard
             cardDetails={eachEmoji}
             onClickEmojiBtn={this.onClickEmojiBtn}
@@ -79,6 +74,7 @@ class EmojiGame extends Component {
       this.setState(prevState => ({
         isEmojiPresent: !prevState.isEmojiPresent,
         topScore: score,
+        hideScore: !prevState.hideScore,
       }))
     }
     this.setState(prevState => ({
@@ -94,12 +90,13 @@ class EmojiGame extends Component {
       showResult,
       isEmojiPresent,
       clickedEmojisList,
+      hideScore,
     } = this.state
     const {emojisList} = this.props
 
     return (
       <div className="bg">
-        <NavBar score={score} topScore={topScore} />
+        <NavBar score={score} topScore={topScore} hideScore={hideScore} />
         {(isEmojiPresent === true || clickedEmojisList.length === 12) &&
         showResult === true
           ? this.gameResult()
