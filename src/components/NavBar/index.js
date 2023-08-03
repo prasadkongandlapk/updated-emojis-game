@@ -13,7 +13,7 @@ const NavBar = props => {
         />
         <h1>Emoji Game</h1>
       </div>
-      {hideScore === false ? (
+      {hideScore === false || score === 11 ? (
         <div className="logo-order">
           <p className="ppp">Score: {score}</p>
           <p>Top Score: {topScore}</p>

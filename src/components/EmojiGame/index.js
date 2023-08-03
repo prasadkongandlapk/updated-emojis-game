@@ -10,20 +10,25 @@ class EmojiGame extends Component {
     clickedEmojisList: [],
     score: 0,
     topScore: 0,
-    showResult: true,
     hideScore: false,
   }
 
   onClickPlayAgain = score => {
     const {topScore} = this.state
     if (score > topScore) {
-      this.setState(prevState => ({
-        showResult: !prevState.showResult,
+      this.setState({topScore: score - 1})
+    } else if (score === 13) {
+      this.gameResult()
+      this.setState({
         topScore: score - 1,
-        hideScore: !prevState.hideScore,
-        score: 0,
-      }))
+      })
     }
+    this.setState(prevState => ({
+      isEmojiPresent: !prevState.isEmojiPresent,
+      hideScore: !prevState.hideScore,
+      clickedEmojisList: [],
+      score: 0,
+    }))
   }
 
   gameResult = () => {
@@ -31,7 +36,6 @@ class EmojiGame extends Component {
       score,
       topScore,
       isEmojiPresent,
-      showResult,
       clickedEmojisList,
       emojisList,
     } = this.state
@@ -41,7 +45,6 @@ class EmojiGame extends Component {
         topScore={topScore}
         onClickPlayAgain={this.onClickPlayAgain}
         isEmojiPresent={isEmojiPresent}
-        showResult={showResult}
         clickedEmojisList={clickedEmojisList}
         emojisList={emojisList}
       />
@@ -66,15 +69,14 @@ class EmojiGame extends Component {
   }
 
   onClickEmojiBtn = id => {
-    const {emojisList} = this.props
     const {clickedEmojisList, score} = this.state
 
     if (clickedEmojisList.includes(id)) {
       clickedEmojisList.pop()
       this.setState(prevState => ({
         isEmojiPresent: !prevState.isEmojiPresent,
-        topScore: score,
         hideScore: !prevState.hideScore,
+        clickedEmojisList: [],
       }))
     }
     this.setState(prevState => ({
@@ -87,18 +89,15 @@ class EmojiGame extends Component {
     const {
       score,
       topScore,
-      showResult,
       isEmojiPresent,
       clickedEmojisList,
       hideScore,
     } = this.state
-    const {emojisList} = this.props
 
     return (
       <div className="bg">
         <NavBar score={score} topScore={topScore} hideScore={hideScore} />
-        {(isEmojiPresent === true || clickedEmojisList.length === 12) &&
-        showResult === true
+        {isEmojiPresent === true || clickedEmojisList.length === 12
           ? this.gameResult()
           : this.emojis()}
       </div>
