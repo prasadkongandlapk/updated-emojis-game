@@ -17,15 +17,10 @@ class EmojiGame extends Component {
     const {topScore} = this.state
     if (score > topScore) {
       this.setState({topScore: score - 1})
-    } else if (score === 13) {
-      this.gameResult()
-      this.setState({
-        topScore: score - 1,
-      })
     }
     this.setState(prevState => ({
       isEmojiPresent: !prevState.isEmojiPresent,
-      hideScore: !prevState.hideScore,
+      hideScore: false,
       clickedEmojisList: [],
       score: 0,
     }))
@@ -75,10 +70,13 @@ class EmojiGame extends Component {
       clickedEmojisList.pop()
       this.setState(prevState => ({
         isEmojiPresent: !prevState.isEmojiPresent,
-        hideScore: !prevState.hideScore,
+        hideScore: true,
         clickedEmojisList: [],
       }))
+    } else if (clickedEmojisList.length === 13) {
+      this.setState({hideScore: true})
     }
+
     this.setState(prevState => ({
       clickedEmojisList: [...clickedEmojisList, id],
       score: prevState.score + 1,
