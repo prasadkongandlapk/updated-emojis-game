@@ -16,7 +16,7 @@ class EmojiGame extends Component {
   onClickPlayAgain = score => {
     const {topScore} = this.state
     if (score > topScore) {
-      this.setState({topScore: score - 1})
+      this.setState({topScore: score})
     }
     this.setState(prevState => ({
       isEmojiPresent: !prevState.isEmojiPresent,
