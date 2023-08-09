@@ -26,6 +26,8 @@ const WinOrLoseCard = props => {
       <div className="adkjl">
         <h1>{title} </h1>
         <p className="aldkfkla">{clickedEmojisList.length}/12</p>
+        <p className="aldkfkla">Score: {score}</p>
+
         <p>Best Score: 12</p>
         <button type="button" onClick={onClick} className="jdfljk">
           Play again

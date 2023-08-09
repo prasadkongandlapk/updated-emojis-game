@@ -73,7 +73,7 @@ class EmojiGame extends Component {
         hideScore: true,
         clickedEmojisList: [],
       }))
-    } else if (clickedEmojisList.length === 13) {
+    } else if (clickedEmojisList.length === 11) {
       this.setState({hideScore: true})
     }
 
