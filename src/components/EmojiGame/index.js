@@ -65,16 +65,15 @@ class EmojiGame extends Component {
 
   onClickEmojiBtn = id => {
     const {clickedEmojisList, score} = this.state
-
-    if (clickedEmojisList.includes(id)) {
+    if (clickedEmojisList.length === 12) {
+      this.setState({isEmojiPresent: true, hideScore: true})
+    } else if (clickedEmojisList.includes(id)) {
       clickedEmojisList.pop()
       this.setState(prevState => ({
         isEmojiPresent: !prevState.isEmojiPresent,
         hideScore: true,
         clickedEmojisList: [],
       }))
-    } else if (clickedEmojisList.length === 11) {
-      this.setState({hideScore: true})
     }
 
     this.setState(prevState => ({
@@ -94,7 +93,12 @@ class EmojiGame extends Component {
 
     return (
       <div className="bg">
-        <NavBar score={score} topScore={topScore} hideScore={hideScore} />
+        <NavBar
+          score={score}
+          topScore={topScore}
+          clickedEmojisList={clickedEmojisList}
+          hideScore={hideScore}
+        />
         {isEmojiPresent === true || clickedEmojisList.length === 12
           ? this.gameResult()
           : this.emojis()}
